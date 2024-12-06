@@ -17,7 +17,7 @@ echo "Welcome, $USER_NAME! It looks like this is your first time here."
 INSERT_USER_RESULT=$($PSQL "insert into users(user_name) values('$USER_NAME')")
 else 
 #if found output text
-GAMES_RESULTS=$($PSQL "select COUNT(*) AS number_of_games, MIN(games.number_of_guesses) as best_game from games where user_id = 1")
+GAMES_RESULTS=$($PSQL "select COUNT(*) AS number_of_games, MIN(games.number_of_guesses) as best_game from games where user_id = $USER_ID")
 echo "$GAMES_RESULTS" | while read NUMBER_OF_GAMES BAR BEST_GAME
 do
 if [[ -z $BEST_GAME  ]]
