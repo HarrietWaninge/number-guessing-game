@@ -2,7 +2,8 @@
 
 PSQL="psql --username=freecodecamp --dbname=number_guess -t --tuples-only -c"
 HOLY_NUMBER=$((RANDOM % 1000 + 1 )) 
-
+NUMBER_OF_TRIES=0
+echo $HOLY_NUMBER
 MAIN_MENU () {
 
 echo "Enter your username:"
@@ -23,34 +24,44 @@ echo -e "Welcome back, $USER_NAME! You have played $NUMBER_OF_GAMES games, and y
 done
 fi
 
+GUESSING 
+
+}
+
+GUESSING() {
 echo "Guess the secret number between 1 and 1000:"
 read HOLY_GUESS
-
 
 
 if [[ ! $HOLY_GUESS =~ ^[0-9]+$ ]]
 then 
 echo That is not an integer, guess again:
-read HOLY_GUESS
+GUESSING
+return
 fi
 
-NUMBER_OF_TRIES=0
+echo "HOLY NUMBER = $HOLY_NUMBER your try was: $HOLY_GUESS"
 
-if [[ $HOLY_GUESS > $HOLY_NUMBER ]]
+if [[ $HOLY_GUESS -gt $HOLY_NUMBER ]]
 then 
 echo "It's lower than that, guess again:"
-((NUMBER_OF_TRIES++))
-echo "$NUMBER_OF_TRIES"
-read HOLY_GUESS
-elif [[ $HOLY_GUESS < $HOLY_NUMBER ]] 
+echo "HOLY NUMBER = $HOLY_NUMBER your try was: $HOLY_GUESS"
+((NUMBER_OF_TRIES+=1))
+GUESSING 
+return
+elif [[ $HOLY_GUESS -lt $HOLY_NUMBER ]] 
 then
 echo "It's higher than that, guess again:"
-read HOLY_GUESS
+echo "HOLY NUMBER = $HOLY_NUMBER your try was: $HOLY_GUESS"
+((NUMBER_OF_TRIES+=1))
+GUESSING
+return
 else 
-echo "You guessed it in <number_of_guesses> tries. The secret number was <secret_number>. Nice job!"
-fi
-}
+((NUMBER_OF_TRIES+=1))
+echo "You guessed it in $NUMBER_OF_TRIES tries. The secret number was $HOLY_NUMBER. Nice job!"
+fi.  #You guessed it in <number_of_guess tries.  The secret number was <secret_numb. Nice job!
 
+}
 
 
 MAIN_MENU
