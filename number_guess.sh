@@ -59,7 +59,7 @@ return
 else 
 ((NUMBER_OF_TRIES+=1))
 echo "You guessed it in $NUMBER_OF_TRIES tries. The secret number was $HOLY_NUMBER. Nice job!"
-fi.  #You guessed it in <number_of_guess tries.  The secret number was <secret_numb. Nice job!
+fi  #You guessed it in <number_of_guess tries.  The secret number was <secret_numb. Nice job!
 
 }
 
