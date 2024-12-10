@@ -3,7 +3,9 @@
 PSQL="psql --username=freecodecamp --dbname=number_guess -t --tuples-only -c"
 HOLY_NUMBER=$((RANDOM % 1000 + 1 )) 
 NUMBER_OF_TRIES=0
+
 echo $HOLY_NUMBER
+
 MAIN_MENU () {
 
 echo "Enter your username:"
