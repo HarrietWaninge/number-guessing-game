@@ -19,10 +19,12 @@ USER_ID=$($PSQL "select user_id from users where user_name = '$USER_NAME'")
 
 else 
 #if found output text
-GAMES_RESULTS=$($PSQL "select COUNT(*) AS number_of_games, MIN(number_of_guesses) as best_game from games where user_id = $USER_ID")
-echo "$GAMES_RESULTS" | while read NUMBER_OF_GAMES BAR BEST_GAME
+GAMES_RESULTS=$($PSQL "select COUNT(*) AS number_of_games, MIN(number_of_guesses) as best_game, user_name from games full join users using(user_id) where user_id = $USER_ID group by user_name")
+echo "$GAMES_RESULTS" | while read NUMBER_OF_GAMES BAR BEST_GAME BAR USER_NAME_DB
 do
-echo -e "Welcome back, $USER_NAME! You have played $NUMBER_OF_GAMES games, and your best game took $BEST_GAME guesses."
+echo -e "Welcome back, $USER_NAME_DB! You have played $NUMBER_OF_GAMES games, and your best game took $BEST_GAME guesses."
+#Welcome back, test! You have played 7 games, and your best game took 1 guesses.
+#Welcome back, <use! You have played < games, and your best game took < guesses.
 done
 fi
 
@@ -64,6 +66,7 @@ else
 ((NUMBER_OF_TRIES+=1))
 INSERT_TRIES_RESULT=$($PSQL "insert into games(user_id, number_of_guesses) values($USER_ID, $NUMBER_OF_TRIES)")
 echo "You guessed it in $NUMBER_OF_TRIES tries. The secret number was $HOLY_NUMBER. Nice job!"
+#     You guessed it in <number_of_guess tries. The secret number was <secret_numb. Nice job!"
 fi  
 
 }
